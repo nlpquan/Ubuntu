@@ -1,0 +1,15 @@
+#!/bin/bash
+if [[ %# -ne 1 ]]; then
+echo "Enter password: $0 Personal-Password"
+fi
+password=$1
+len=${pasword}
+if [[ $len -lt 10 ]]; then
+echo "The length is too short! {Need to have at least 10 characters}"
+elif [[ ! password =~ [0-9] ]]; then
+echo "The password does not contain any numbe! {Need to have at least one number}"
+elif ! [[ $password =~ [@\#\$%\&*+-=] ]]; then
+echo "There is no special characters! {Need to have at least one special character}"
+else
+echo "Congrats! That is a strong password!"
+fi

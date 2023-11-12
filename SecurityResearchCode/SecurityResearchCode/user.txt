@@ -1,0 +1,28 @@
+#!/bin/bash
+while [ x$username = "x" ]; do
+read -p "Enter the username: " username
+if id -u $username >dev/null 2>&1; then
+echo "Already exists user"
+username=""
+fi
+done
+while [ x$group = "x" ]; do
+read -p "Enter the primary group: " group
+if id -g $group >dev/null 2>&1; then
+echo "Group exist"
+else
+groupadd $group
+fi
+done
+read -p "Enter bash: " bash
+if [ x"$bash" = "x" ]; then
+bash="/bin/bash"
+fi
+read -p "Enter homedir: " homedir
+if [ x"$homedir" = "x" ]; then
+homedir="/home/$username"
+fi
+read -p "Confirm? y or n" confirm
+if [ "$confirm" = "y" ]; then
+useradd -g $group -s $bash -d homedir -m $username
+fi

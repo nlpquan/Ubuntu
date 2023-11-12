@@ -1,0 +1,67 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <errno.h>
+// Author: Quan Nguyen
+// References: stackoverflow
+/**
+ * Logic to run to simulate a Parent Process
+ **/
+void childProcess()
+{
+    // Child process: simple example where we count up to 10 and sleep for a second
+    for(int x=0; x<10; ++x)
+    {
+        printf("Child Process: %d\n", x);
+        sleep(1);
+    }
+    
+    // Exit the child process and Not exit()
+    _exit(0);
+}
+
+/**
+ * Logic to run to simulate a parent process
+ **/
+ void parentProcess()
+ {
+     // parent process: simpel example where we count up to 10 and sleep for 2 seconds
+     for(int y=0; y<10; ++y)
+     {
+         printf("Parent Process: %d\n", y);
+         sleep(2);
+     }
+     
+     // Exit the child process and NOT exit()
+     _exit(0);
+ }
+ 
+ /**
+  * Main application entry point
+  * @return 1 if error or 0 if OK
+  **/
+  int main(int argc, char*argv[])
+  {
+      pid_t pid;
+      
+      // Use fork()
+      pid = fork();
+      if(pid == -1)
+      {
+          // Error
+          fprintf(stderr, "can't fork, error %d\n, errno");
+          exit(EXIT_FAILURE);
+      }
+      //OK
+      if(pid == 0)
+      {
+          childProcess();
+      }
+      else
+      {
+          parentProcess();
+      }
+      
+      // Return OK
+      return 0;
+  }
